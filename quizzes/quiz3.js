@@ -51,7 +51,7 @@ const quiz3 = [
   // Page 3 (Q6 to Q8)
   {
     id: 6,
-    q: "'अ' अक्षर वाले चित्र को चुनिए:",
+    q: "'ए' अक्षर वाले चित्र को चुनिए:",
     img: null,
     opts: [
       { text: "एकतारा", img: "images/ektara.jpeg", correct: true }, // Key: A
@@ -209,7 +209,7 @@ const quiz3 = [
     img: null,
     opts: [
       { text: "ऋषि", img: "images/rishi.jpeg", correct: false },
-      { text: "ऐनक", img: "images/spectacles.jpeg", correct: true } // Key: B
+      { text: "ऐनक", img: "images/spectacles.png", correct: true } // Key: B
     ]
   },
 
@@ -219,8 +219,8 @@ const quiz3 = [
     q: "समान चित्र को पहचानिए:",
     img: "images/kshatriya.jpeg", // Soldier
     opts: [
-      { text: "ऋषि", img: "images/kshatriya.jpeg", correct: true }, // Key: A
-      { text: "घोड़ा", img: "images/rishi.jpeg", correct: false }
+      { text: "क्षत्रिय", img: "images/kshatriya.jpeg", correct: true }, // Key: A
+      { text: "ऋषि", img: "images/rishi.jpeg", correct: false }
     ]
   },
   {
@@ -228,7 +228,7 @@ const quiz3 = [
     q: "'घ' अक्षर वाला चित्र है:",
     img: null,
     opts: [
-      { text: "घोड़ा", img: "images/horse.jpeg", correct: true }, // Key: A
+      { text: "घोड़ा", img: "images/horse.png", correct: true }, // Key: A
       { text: "गमला", img: "images/flower_pot.jpeg", correct: false }
     ]
   },
@@ -237,7 +237,7 @@ const quiz3 = [
     q: "सही मिलान को चुनिए:",
     img: null,
     opts: [
-      { text: "छाता - थ", img: "images/umbrella.jpeg", correct: false },
+      { text: "छाता - थ", img: "images/umbrella.png", correct: false },
       { text: "जग - ज", img: "images/jug.jpeg", correct: true } // Key: B
     ]
   },
@@ -249,7 +249,7 @@ const quiz3 = [
     img: null,
     opts: [
       { text: "गमला - च", img: "images/flower_pot.jpeg", correct: true }, // Key: A
-      { text: "घोड़ा - घ", img: "images/horse.jpeg", correct: false }
+      { text: "घोड़ा - घ", img: "images/horse.png", correct: false }
     ]
   },
   {
@@ -317,7 +317,7 @@ const quiz3 = [
     q: "'ऐ' किसके बाद आने वाला स्वर है?",
     img: null,
     opts: [
-      { text: "ओ", img: null, correct: true }, // Key: A
+      { text: "ए", img: null, correct: true }, // Key: A
       { text: "इ", img: null, correct: false }
     ]
   },
