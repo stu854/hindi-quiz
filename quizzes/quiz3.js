@@ -41,7 +41,7 @@ const quiz3 = [
   {
     id: 5,
     q: "समान चित्र को चुनिए:",
-    img: "images/wool.jpeg", // Wool (ऊन)
+    img: "images/wool.png", // Wool (ऊन)
     opts: [
       { text: "उल्लू", img: "images/owl.jpeg", correct: false },
       { text: "ऊन", img: "images/wool.png", correct: true } // Key: B
