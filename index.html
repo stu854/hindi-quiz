@@ -49,8 +49,8 @@ const quiz = [
     q: "'इ' अक्षर वाला चित्र कौन सा है?",
     img: null,
     opts: [
-      { text: "आम", img: "images/q2_mango.png", correct: false },
-      { text: "इमली", img: "images/q2_tamarind.png", correct: true } // Key: B
+      { text: "आम", img: "images/mango.jpeg", correct: false },
+      { text: "इमली", img: "images/tamarind.jpeg", correct: true } // Key: B
     ]
   },
   {
@@ -67,7 +67,7 @@ const quiz = [
   {
     id: 4,
     q: "चित्र से संबंधित अक्षर पहचानिए:",
-    img: "images/q4_tamarind.png", // Tamarind image
+    img: "images/mango.jpeg", // Tamarind image
     opts: [
       { text: "इ", img: null, correct: true }, // Key: A (इमली)
       { text: "अ", img: null, correct: false }
@@ -78,8 +78,8 @@ const quiz = [
     q: "उचित मिलान को चुनिए:",
     img: null,
     opts: [
-      { text: "आम - आ", img: "images/q5_mango_aa.png", correct: true }, // Key: A
-      { text: "अंगूर - आ", img: "images/q5_grapes_aa.png", correct: false }
+      { text: "आम - आ", img: "images/tamarind.jpeg", correct: true }, // Key: A
+      { text: "अंगूर - आ", img: "images/sugarcane.jpeg", correct: false }
     ]
   },
 
@@ -89,8 +89,8 @@ const quiz = [
     q: "'ऊ' अक्षर वाले चित्र को पहचानिए:",
     img: null,
     opts: [
-      { text: "ऊन", img: "images/q6_wool.png", correct: true }, // Key: A
-      { text: "अनार", img: "images/q6_pomegranate.png", correct: false }
+      { text: "ऊन", img: "images/wool.png", correct: true }, // Key: A
+      { text: "अनार", img: "images/pomegranate.jpeg", correct: false }
     ]
   },
   {
@@ -98,8 +98,8 @@ const quiz = [
     q: "'ऋ' अक्षर वाले चित्र को चुनिए:",
     img: null,
     opts: [
-      { text: "ऋषि", img: "images/q7_rishi.png", correct: true }, // Key: A
-      { text: "ऊँट", img: "images/q7_camel.png", correct: false }
+      { text: "ऋषि", img: "images/rishi.jpeg", correct: true }, // Key: A
+      { text: "ऊँट", img: "images/wool.png", correct: false }
     ]
   },
 
@@ -109,8 +109,8 @@ const quiz = [
     q: "गलत मिलान को पहचानिए:",
     img: null,
     opts: [
-      { text: "ऊन - ऊ", img: "images/q8_wool_oo.png", correct: false },
-      { text: "ऐनक - ऊ", img: "images/q8_glasses_oo.png", correct: true } // Key: B (Wrong match)
+      { text: "ऊन - ऊ", img: "images/wool.png", correct: false },
+      { text: "ऐनक - ऊ", img: "images/woman.jpeg", correct: true } // Key: B (Wrong match)
     ]
   },
   {
@@ -156,8 +156,8 @@ const quiz = [
     q: "'ऐ' अक्षर वाले चित्र को चुनिए:",
     img: null,
     opts: [
-      { text: "ऐनक", img: "images/q13_glasses.png", correct: true }, // Key: A
-      { text: "ओखली", img: "images/q13_mortar.png", correct: false }
+      { text: "ऐनक", img: "images/spectacles.png", correct: true }, // Key: A
+      { text: "एड़ी", img: "images/heel.jpeg", correct: false }
     ]
   },
   {
@@ -174,7 +174,7 @@ const quiz = [
   {
     id: 15,
     q: "चित्र से संबंधित अक्षर पहचानिए:",
-    img: "images/q15_grapes.png", // Grapes
+    img: "images/green_grapes.png", // Grapes
     opts: [
       { text: "आ", img: null, correct: false },
       { text: "अं", img: null, correct: true } // Key: B (अंगूर)
@@ -183,10 +183,10 @@ const quiz = [
   {
     id: 16,
     q: "चित्र के नाम का पहला अक्षर पहचानिए:",
-    img: "images/q16_sugarcane.png", // Sugarcane (ईख)
+    img: "images/heel.jpeg", // Heel (एड़ी)
     opts: [
       { text: "ऐ", img: null, correct: false },
-      { text: "ई", img: null, correct: true } // Key: B
+      { text: "ए", img: null, correct: true } // Key: B
     ]
   },
   {
@@ -194,8 +194,8 @@ const quiz = [
     q: "'ओ' से संबंधित चित्र को पहचानिए:",
     img: null,
     opts: [
-      { text: "अंगूर", img: "images/q17_grapes.png", correct: false },
-      { text: "ओखली", img: "images/q17_okhli.png", correct: true } // Key: B
+      { text: "अंगूर", img: "images/sugarcane.jpegg", correct: false },
+      { text: "ओखली", img: "images/okhli.jpeg", correct: true } // Key: B
     ]
   },
 
@@ -205,8 +205,8 @@ const quiz = [
     q: "सही मिलान को पहचानिए:",
     img: null,
     opts: [
-      { text: "ऊँट - आओ", img: "images/q18_camel.png", correct: false },
-      { text: "अंगूर - अं", img: "images/q18_grapes.png", correct: true } // Key: B
+      { text: "ऊँट - आओ", img: "images/camel.jpeg", correct: false },
+      { text: "अंगूर - अं", img: "images/green_grapes.jpeg", correct: true } // Key: B
     ]
   },
   {
@@ -214,8 +214,8 @@ const quiz = [
     q: "'अं' अक्षर से संबंधित चित्र को पहचानिए:",
     img: null,
     opts: [
-      { text: "केला", img: "images/q19_banana.png", correct: false },
-      { text: "अंगूर", img: "images/q19_grapes.png", correct: true } // Key: B
+      { text: "केला", img: "images/banana.jpeg", correct: false },
+      { text: "अंगूर", img: "images/green_grapes.jpeg", correct: true } // Key: B
     ]
   },
 
@@ -225,14 +225,14 @@ const quiz = [
     q: "गलत मिलान को पहचानिए:",
     img: null,
     opts: [
-      { text: "खरगोश - ख", img: "images/q20_rabbit.png", correct: true }, // Key: A (Identifies error match)
-      { text: "इमली - इ", img: "images/q20_tamarind.png", correct: false }
+      { text: "कबूतर - ख", img: "images/pigeon.jpeg", correct: true }, // Key: A (Identifies error match)
+      { text: "इमली - इ", img: "images/tamarind.jpeg", correct: false }
     ]
   },
   {
     id: 21,
     q: "चित्र के नाम का पहला अक्षर पहचानिए:",
-    img: "images/q21_apple.png", // Apple (सेब)
+    img: "images/apple.png", // Apple (सेब)
     opts: [
       { text: "स", img: null, correct: true }, // Key: A
       { text: "आ", img: null, correct: false }
@@ -254,8 +254,8 @@ const quiz = [
     q: "'फ' अक्षर वाले चित्र को पहचानिए:",
     img: null,
     opts: [
-      { text: "फल", img: "images/q23_fruits.png", correct: true }, // Key: A
-      { text: "ऋषि", img: "images/q23_rishi.png", correct: false }
+      { text: "फल", img: "images/fruits.jpeg", correct: true }, // Key: A
+      { text: "ऋषि", img: "images/rishi.jpeg", correct: false }
     ]
   },
   {
@@ -274,8 +274,8 @@ const quiz = [
     q: "'छ' अक्षर वाला चित्र है:",
     img: null,
     opts: [
-      { text: "छाता", img: "images/q25_umbrella.png", correct: true }, // Key: A
-      { text: "घड़ी", img: "images/q25_clock.png", correct: false }
+      { text: "छाता", img: "images/umbrella.jpeg", correct: true }, // Key: A
+      { text: "घड़ी", img: "images/kite.jpeg", correct: false }
     ]
   },
   {
@@ -283,8 +283,8 @@ const quiz = [
     q: "सही मिलान को चुनिए:",
     img: null,
     opts: [
-      { text: "तोता - त", img: "images/q26_parrot.png", correct: true }, // Key: A
-      { text: "पतंग - फ", img: "images/q26_kite.png", correct: false }
+      { text: "फल - फ", img: "images/fruits.jpeg", correct: true }, // Key: A
+      { text: "जग - त", img: "images/jug.jpeg", correct: false }
     ]
   },
 
@@ -294,8 +294,8 @@ const quiz = [
     q: "गलत मिलान को चुनिए:",
     img: null,
     opts: [
-      { text: "टमाटर - ट", img: "images/q27_tomato.png", correct: false },
-      { text: "इमली - ओ", img: "images/q27_tamarind.png", correct: true } // Key: B (Wrong match)
+      { text: "टमाटर - ट", img: "images/tomato.jpeg", correct: false },
+      { text: "इमली - ओ", img: "images/tamarind.jpeg", correct: true } // Key: B (Wrong match)
     ]
   },
   {
@@ -303,8 +303,8 @@ const quiz = [
     q: "'क' वाला चित्र कौन सा है?",
     img: null,
     opts: [
-      { text: "चीता", img: "images/q28_leopard.png", correct: false },
-      { text: "कबूतर", img: "images/q28_pigeon.png", correct: true } // Key: B
+      { text: "चीता", img: "images/cheetah.jpeg", correct: false },
+      { text: "कबूतर", img: "images/pigeon.jpeg", correct: true } // Key: B
     ]
   },
 
@@ -312,7 +312,7 @@ const quiz = [
   {
     id: 29,
     q: "चित्र के नाम का पहला अक्षर है:",
-    img: "images/q29_house.png", // House (घर)
+    img: "images/house.jpeg", // House (घर)
     opts: [
       { text: "क", img: null, correct: false },
       { text: "घ", img: null, correct: true } // Key: B
@@ -332,8 +332,8 @@ const quiz = [
     q: "गलत मिलान को पहचानिए:",
     img: null,
     opts: [
-      { text: "गमला - ग", img: "images/q31_pot.png", correct: false },
-      { text: "फूल - फ", img: "images/q31_flower.png", correct: true } // Key: B (Per answer key)
+      { text: "गमला - ग", img: "images/flower_pot.jpeg", correct: false },
+      { text: "फूल - फ", img: "images/kite.jpeg", correct: true } // Key: B (Per answer key)
     ]
   },
 
@@ -343,8 +343,8 @@ const quiz = [
     q: "सही मिलान को पहचानिए:",
     img: null,
     opts: [
-      { text: "कबूतर - क", img: "images/q32_pigeon.png", correct: true }, // Key: A
-      { text: "झंडा - फ", img: "images/q32_flag.png", correct: false }
+      { text: "फल - फ", img: "images/q32_pigeon.png", correct: true }, // Key: A
+      { text: "नल - क", img: "images/q32_flag.png", correct: false }
     ]
   },
   {
@@ -359,7 +359,7 @@ const quiz = [
   {
     id: 34,
     q: "चित्र देखकर सही अक्षर पहचानो:",
-    img: "images/q34_plough.png", // Plough (हल)
+    img: "images/hal.jpeg", // Plough (हल)
     opts: [
       { text: "ह", img: null, correct: true }, // Key: A
       { text: "अ", img: null, correct: false }
@@ -372,8 +372,8 @@ const quiz = [
     q: "'ई' अक्षर वाला चित्र है:",
     img: null,
     opts: [
-      { text: "सांप", img: "images/q35_snake.png", correct: false },
-      { text: "ईख", img: "images/q35_sugarcane.png", correct: true } // Key: B
+      { text: "सांप", img: "images/snake.jpeg", correct: false },
+      { text: "ईख", img: "images/sugarcane.jpeg", correct: true } // Key: B
     ]
   },
   {
@@ -390,8 +390,8 @@ const quiz = [
     q: "'ज्ञ' वाला चित्र है:",
     img: null,
     opts: [
-      { text: "ज्ञानी", img: "images/q37_gyani.png", correct: true }, // Key: A
-      { text: "नल", img: "images/q37_tap.png", correct: false }
+      { text: "ज्ञानी", img: "images/gyani.jpeg", correct: true }, // Key: A
+      { text: "क्षत्रिय", img: "images/kshatriya.jpeg", correct: false }
     ]
   },
 
@@ -401,14 +401,14 @@ const quiz = [
     q: "'प' अक्षर वाला चित्र है:",
     img: null,
     opts: [
-      { text: "पतंग", img: "images/q38_kite.png", correct: true }, // Key: A
-      { text: "घोड़ा", img: "images/q38_horse.png", correct: false }
+      { text: "पतंग", img: "images/kite.jpeg", correct: true }, // Key: A
+      { text: "घोड़ा", img: "images/horse.png", correct: false }
     ]
   },
   {
     id: 39,
     q: "चित्र देखकर अक्षर पहचानिए:",
-    img: "images/q39_flower.png", // Flower pot / phool (फूल)
+    img: "images/flower_pot.jpeg", // Flower pot / phool (फूल)
     opts: [
       { text: "क", img: null, correct: false },
       { text: "फ", img: null, correct: true } // Key: B
@@ -419,8 +419,8 @@ const quiz = [
     q: "'झ' अक्षर वाला चित्र है:",
     img: null,
     opts: [
-      { text: "फल", img: "images/q40_fruits.png", correct: false },
-      { text: "झंडा", img: "images/q40_flag.png", correct: true } // Key: B
+      { text: "फल", img: "images/fruits.jpeg", correct: false },
+      { text: "झंडा", img: "images/indian_flag.jpeg", correct: true } // Key: B
     ]
   }
 ];
