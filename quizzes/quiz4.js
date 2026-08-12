@@ -2,390 +2,388 @@ const quiz4 = [
   // Page 1 (Q1 to Q3)
   {
     id: 1,
-    q: "'अ' अक्षर के बाद आता है?",
+    q: "'इ' अक्षर के बाद आता है:",
     img: null,
     opts: [
-      { text: "इ", img: null, correct: false },
-      { text: "आ", img: null, correct: true } // Key: B
+      { text: "ई", img: null, correct: true },
+      { text: "उ", img: null, correct: false }
     ]
   },
   {
     id: 2,
-    q: "'इ' अक्षर वाला चित्र कौन सा है?",
+    q: "'ओ' अक्षर वाले चित्र को चुनिए:",
     img: null,
     opts: [
-      { text: "आम", img: "images/mango.jpeg", correct: false },
-      { text: "इमली", img: "images/tamarind.jpeg", correct: true } // Key: B
+      { text: "ओखली", img: "images/p4_q2_mortar.png", correct: true },
+      { text: "औरत", img: "images/p4_q2_woman.png", correct: false }
     ]
   },
   {
     id: 3,
-    q: "'आ' अक्षर से पहले आता है?",
+    q: "'उ' अक्षर से पहले आता है:",
     img: null,
     opts: [
-      { text: "इ", img: null, correct: false },
-      { text: "अ", img: null, correct: true } // Key: B
+      { text: "ई", img: null, correct: true },
+      { text: "अ", img: null, correct: false }
     ]
   },
 
   // Page 2 (Q4 to Q5)
   {
     id: 4,
-    q: "चित्र से संबंधित अक्षर पहचानिए:",
-    img: "images/mango.jpeg", // Mango image
+    q: "उचित मिलान को चुनिए:",
+    img: null,
     opts: [
-      { text: "आ", img: null, correct: true }, // Key: A (इमली)
-      { text: "अ", img: null, correct: false }
+      { text: "इमली - आ", img: "images/p4_q4_tamarind_aa.png", correct: false },
+      { text: "इमली - इ", img: "images/p4_q4_tamarind_i.png", correct: true }
     ]
   },
   {
     id: 5,
-    q: "उचित मिलान को चुनिए:",
+    q: "'इ' अक्षर वाले चित्र को पहचानिए:",
     img: null,
     opts: [
-      { text: "इमली - इ", img: "images/tamarind.jpeg", correct: true }, // Key: A
-      { text: "ईख - आ", img: "images/sugarcane.jpeg", correct: false }
+      { text: "इमली", img: "images/p4_q5_tamarind.png", correct: true },
+      { text: "अमरूद", img: "images/p4_q5_guava.png", correct: false }
     ]
   },
 
-  // Page 3 (Q6 to Q7)
+  // Page 3 (Q6 to Q8)
   {
     id: 6,
-    q: "'ऊ' अक्षर वाले चित्र को पहचानिए:",
+    q: "'आ' अक्षर वाले चित्र को चुनिए:",
     img: null,
     opts: [
-      { text: "ऊन", img: "images/wool.png", correct: true }, // Key: A
-      { text: "अनार", img: "images/pomegranate.jpeg", correct: false }
+      { text: "आम", img: "images/p4_q6_mango.png", correct: true },
+      { text: "अनार", img: "images/p4_q6_pomegranate.png", correct: false }
     ]
   },
   {
     id: 7,
-    q: "'ऋ' अक्षर वाले चित्र को चुनिए:",
+    q: "दिए गए अक्षर से अलग अक्षर को पहचानिए:",
     img: null,
     opts: [
-      { text: "ऋषि", img: "images/rishi.jpeg", correct: true }, // Key: A
-      { text: "ऊँट", img: "images/wool.png", correct: false }
-    ]
-  },
-
-  // Page 4 (Q8 to Q10)
-  {
-    id: 8,
-    q: "गलत मिलान को पहचानिए:",
-    img: null,
-    opts: [
-      { text: "ऊन - ऊ", img: "images/wool.png", correct: false },
-      { text: "औरत - ऐ", img: "images/woman.jpeg", correct: true } // Key: B (Wrong match)
-    ]
-  },
-  {
-    id: 9,
-    q: "'इ' और 'उ' के बीच का खाली स्थान भरिए: इ_उ",
-    img: null,
-    opts: [
-      { text: "ई", img: null, correct: true }, // Key: A
+      { text: "इ", img: null, correct: true },
       { text: "आ", img: null, correct: false }
     ]
   },
   {
-    id: 10,
-    q: "'ए' और 'ओ' के बीच का खाली स्थान भरिए:",
+    id: 8,
+    q: "'अ' ..... 'इ' खाली स्थान भरिए:",
     img: null,
     opts: [
-      { text: "ऊ", img: null, correct: false },
-      { text: "ऐ", img: null, correct: true } // Key: B
+      { text: "आ", img: null, correct: true },
+      { text: "ई", img: null, correct: false }
     ]
   },
 
-  // Page 5 & 6 (Q11 to Q14)
+  // Page 4 (Q9 to Q11)
   {
-    id: 11,
-    q: "'ऊ' अक्षर के बाद आता है?",
+    id: 9,
+    q: "व्यंजन पहचानिए:",
     img: null,
     opts: [
-      { text: "ऋ", img: null, correct: true }, // Key: A (Based on order)
-      { text: "औ", img: null, correct: false }
-    ]
-  },
-  {
-    id: 12,
-    q: "'ऐ' अक्षर से पहले आता है?",
-    img: null,
-    opts: [
-      { text: "ए", img: null, correct: true }, // Key: A
+      { text: "व", img: null, correct: true },
       { text: "ओ", img: null, correct: false }
     ]
   },
   {
-    id: 13,
-    q: "'ऐ' अक्षर वाले चित्र को चुनिए:",
+    id: 10,
+    q: "'ऋ' अक्षर के बाद आता है:",
     img: null,
     opts: [
-      { text: "ऐनक", img: "images/spectacles.png", correct: true }, // Key: A
-      { text: "एड़ी", img: "images/heel.jpeg", correct: false }
+      { text: "उ", img: null, correct: false },
+      { text: "ए", img: null, correct: true }
+    ]
+  },
+  {
+    id: 11,
+    q: "'ढ' से संबंधित चित्र को पहचानिए:",
+    img: null,
+    opts: [
+      { text: "ढोलक", img: "images/p4_q11_dholak.png", correct: true },
+      { text: "छाता", img: "images/p4_q11_umbrella.png", correct: false }
+    ]
+  },
+
+  // Page 5 (Q12 to Q14)
+  {
+    id: 12,
+    q: "व्यंजन पहचानिए:",
+    img: null,
+    opts: [
+      { text: "ष", img: null, correct: true },
+      { text: "ई", img: null, correct: false }
+    ]
+  },
+  {
+    id: 13,
+    q: "सही मिलान को पहचानिए:",
+    img: null,
+    opts: [
+      { text: "इमली - इ", img: "images/p4_q13_tamarind_i.png", correct: true },
+      { text: "अमरूद - ए", img: "images/p4_q13_guava_e.png", correct: false }
     ]
   },
   {
     id: 14,
-    q: "'ई' के बाद कौन सा अक्षर आता है?",
+    q: "'अ' अक्षर वाले चित्र को चुनिए:",
     img: null,
     opts: [
-      { text: "ऊ", img: null, correct: false },
-      { text: "उ", img: null, correct: true } // Key: B
+      { text: "अनार", img: "images/p4_q14_pomegranate.png", correct: true },
+      { text: "अमरूद", img: "images/p4_q14_guava.png", correct: false }
     ]
   },
 
-  // Page 7 (Q15 to Q17)
+  // Page 6 (Q15 to Q17)
   {
     id: 15,
-    q: "चित्र से संबंधित अक्षर पहचानिए:",
-    img: "images/green_grapes.jpeg", // Grapes
+    q: "चित्र के नाम का पहला अक्षर पहचानिए:",
+    img: "images/p4_q15_tamarind.png", // Tamarind (इमली)
     opts: [
-      { text: "आ", img: null, correct: false },
-      { text: "अं", img: null, correct: true } // Key: B (अंगूर)
+      { text: "अ", img: null, correct: false },
+      { text: "इ", img: null, correct: true }
     ]
   },
   {
     id: 16,
-    q: "चित्र के नाम का पहला अक्षर पहचानिए:",
-    img: "images/heel.jpeg", // Heel (एड़ी)
+    q: "'ए' से संबंधित चित्र को पहचानिए:",
+    img: null,
     opts: [
-      { text: "ऐ", img: null, correct: false },
-      { text: "ए", img: null, correct: true } // Key: B
+      { text: "एड़ी", img: "images/p4_q16_heel.png", correct: true },
+      { text: "उल्लू", img: "images/p4_q16_owl.png", correct: false }
     ]
   },
   {
     id: 17,
-    q: "'ओ' से संबंधित चित्र को पहचानिए:",
+    q: "'इ' अक्षर वाले चित्र को चुनिए:",
     img: null,
     opts: [
-      { text: "अंगूर", img: "images/sugarcane.jpeg", correct: false },
-      { text: "ओखली", img: "images/okhli.jpeg", correct: true } // Key: B
+      { text: "उल्लू", img: "images/p4_q17_owl.png", correct: false },
+      { text: "इमली", img: "images/p4_q17_tamarind.png", correct: true }
     ]
   },
 
-  // Page 8 (Q18 to Q19)
+  // Page 7 (Q18 to Q20)
   {
     id: 18,
-    q: "सही मिलान को पहचानिए:",
+    q: "'ए' ....... 'ओ' के बीच में आने वाला अक्षर पहचानिए:",
     img: null,
     opts: [
-      { text: "ऊँट - ओ", img: "images/camel.jpeg", correct: false },
-      { text: "अंगूर - अं", img: "images/green_grapes.jpeg", correct: true } // Key: B
+      { text: "आ", img: null, correct: false },
+      { text: "ऐ", img: null, correct: true }
     ]
   },
   {
     id: 19,
+    q: "'ऐ' अक्षर के बाद आता है:",
+    img: null,
+    opts: [
+      { text: "आ", img: null, correct: false },
+      { text: "ओ", img: null, correct: true }
+    ]
+  },
+  {
+    id: 20,
+    q: "चित्र से संबंधित अक्षर पहचानिए:",
+    img: "images/p4_q20_rishi.png", // Sage (ऋषि)
+    opts: [
+      { text: "आ", img: null, correct: false },
+      { text: "ऋ", img: null, correct: true }
+    ]
+  },
+
+  // Page 8 (Q21 to Q23)
+  {
+    id: 21,
     q: "'अं' अक्षर से संबंधित चित्र को पहचानिए:",
     img: null,
     opts: [
-      { text: "केला", img: "images/banana.jpeg", correct: false },
-      { text: "अंगूर", img: "images/green_grapes.jpeg", correct: true } // Key: B
+      { text: "औरत", img: "images/p4_q21_woman.png", correct: false },
+      { text: "अंगूर", img: "images/p4_q21_grapes.png", correct: true }
     ]
   },
-
-  // Page 9 (Q20 to Q21)
-  {
-    id: 20,
-    q: "गलत मिलान को पहचानिए:",
-    img: null,
-    opts: [
-      { text: "कबूतर - ख", img: "images/pigeon.jpeg", correct: true }, // Key: A (Identifies error match)
-      { text: "इमली - इ", img: "images/tamarind.jpeg", correct: false }
-    ]
-  },
-  {
-    id: 21,
-    q: "चित्र के नाम का पहला अक्षर पहचानिए:",
-    img: "images/apple.png", // Apple (सेब)
-    opts: [
-      { text: "स", img: null, correct: true }, // Key: A
-      { text: "आ", img: null, correct: false }
-    ]
-  },
-
-  // Page 10 (Q22 to Q24)
   {
     id: 22,
-    q: "'ए' और 'ओ' के बीच में आने वाला अक्षर कौन सा है?",
+    q: "'ई' अक्षर वाले चित्र को पहचानिए:",
     img: null,
     opts: [
-      { text: "औ", img: null, correct: false },
-      { text: "ऐ", img: null, correct: true } // Key: B
+      { text: "ईख", img: "images/p4_q22_sugarcane.png", correct: true },
+      { text: "ओखली", img: "images/p4_q22_mortar.png", correct: false }
     ]
   },
   {
     id: 23,
-    q: "'फ' अक्षर वाले चित्र को पहचानिए:",
+    q: "'ट' अक्षर वाला चित्र है:",
     img: null,
     opts: [
-      { text: "फल", img: "images/fruits.jpeg", correct: true }, // Key: A
-      { text: "ऋषि", img: "images/rishi.jpeg", correct: false }
-    ]
-  },
-  {
-    id: 24,
-    q: "इनमें से स्वर पहचानिए:",
-    img: null,
-    opts: [
-      { text: "न", img: null, correct: false },
-      { text: "ई", img: null, correct: true } // Key: B
+      { text: "टमाटर", img: "images/p4_q23_tomato.png", correct: true },
+      { text: "उल्लू", img: "images/p4_q23_owl.png", correct: false }
     ]
   },
 
-  // Page 11 (Q25 to Q26)
+  // Page 9 (Q24 to Q25)
   {
-    id: 25,
-    q: "'छ' अक्षर वाला चित्र है:",
-    img: null,
+    id: 24,
+    q: "जहाज और जग किस अक्षर से शुरू होते हैं?",
+    img: "images/p4_q24_ship_jug.png",
     opts: [
-      { text: "छाता", img: "images/umbrella.png", correct: true }, // Key: A
-      { text: "घड़ी", img: "images/kite.jpeg", correct: false }
+      { text: "ज", img: null, correct: true },
+      { text: "क्ष", img: null, correct: false }
     ]
   },
   {
-    id: 26,
+    id: 25,
     q: "सही मिलान को चुनिए:",
     img: null,
     opts: [
-      { text: "फल - फ", img: "images/fruits.jpeg", correct: true }, // Key: A
-      { text: "जग - त", img: "images/jug.jpeg", correct: false }
+      { text: "खरगोश - क", img: "images/p4_q25_rabbit_k.png", correct: false },
+      { text: "रथ - र", img: "images/p4_q25_chariot_r.png", correct: true }
     ]
   },
 
-  // Page 12 (Q27 to Q28)
+  // Page 10 (Q26 to Q28)
   {
-    id: 27,
-    q: "गलत मिलान को चुनिए:",
+    id: 26,
+    q: "'ब' अक्षर से संबंधित चित्र को चुनिए:",
     img: null,
     opts: [
-      { text: "टमाटर - ट", img: "images/tomato.jpeg", correct: false },
-      { text: "इमली - ओ", img: "images/tamarind.jpeg", correct: true } // Key: B (Wrong match)
+      { text: "बत्तख", img: "images/p4_q26_duck.png", correct: true },
+      { text: "ठठेरा", img: "images/p4_q26_thathera.png", correct: false }
+    ]
+  },
+  {
+    id: 27,
+    q: "समान चित्र को पहचानिए:",
+    img: "images/p4_q27_watermelon_ref.png", // Watermelon (तरबूज)
+    opts: [
+      { text: "तरबूज", img: "images/p4_q27_watermelon.png", correct: true },
+      { text: "अमरूद", img: "images/p4_q27_guava.png", correct: false }
     ]
   },
   {
     id: 28,
-    q: "'क' वाला चित्र कौन सा है?",
-    img: null,
+    q: "चित्र के नाम का पहला अक्षर है:",
+    img: "images/p4_q28_rabbit.png", // Rabbit (खरगोश)
     opts: [
-      { text: "चीता", img: "images/cheetah.jpeg", correct: false },
-      { text: "कबूतर", img: "images/pigeon.jpeg", correct: true } // Key: B
+      { text: "ग", img: null, correct: false },
+      { text: "ख", img: null, correct: true }
     ]
   },
 
-  // Page 13 (Q29 to Q31)
+  // Page 11 (Q29 to Q31)
   {
     id: 29,
-    q: "चित्र के नाम का पहला अक्षर है:",
-    img: "images/house.jpeg", // House (घर)
+    q: "'छ' अक्षर वाले चित्र को पहचानिए:",
+    img: null,
     opts: [
-      { text: "क", img: null, correct: false },
-      { text: "घ", img: null, correct: true } // Key: B
+      { text: "छाता", img: "images/p4_q29_umbrella.png", correct: true },
+      { text: "मछली", img: "images/p4_q29_fish.png", correct: false }
     ]
   },
   {
     id: 30,
-    q: "इनमें से व्यंजन पहचानिए:",
+    q: "अलग चित्र को पहचानिए:",
     img: null,
     opts: [
-      { text: "आ", img: null, correct: false },
-      { text: "स", img: null, correct: true } // Key: B
+      { text: "उल्लू", img: "images/p4_q30_owl.png", correct: true },
+      { text: "मछली", img: "images/p4_q30_fish.png", correct: false }
     ]
   },
   {
     id: 31,
-    q: "गलत मिलान को पहचानिए:",
+    q: "'ए' से पहले आने वाला अक्षर है:",
     img: null,
     opts: [
-      { text: "गमला - ग", img: "images/flower_pot.jpeg", correct: false },
-      { text: "पतंग - फ", img: "images/kite.jpeg", correct: true } // Key: B (Per answer key)
+      { text: "अ", img: null, correct: false },
+      { text: "ऋ", img: null, correct: true }
     ]
   },
 
-  // Page 14 (Q32 to Q34)
+  // Page 12 (Q32 to Q35)
   {
     id: 32,
-    q: "सही मिलान को पहचानिए:",
+    q: "..... 'इ' खाली स्थान के लिए अक्षर चुनिए:",
     img: null,
     opts: [
-      { text: "फल - फ", img: "images/fruits.jpeg", correct: true }, // Key: A
-      { text: "नल - क", img: "images/tap.jpeg", correct: false }
+      { text: "आ", img: null, correct: true },
+      { text: "ई", img: null, correct: false }
     ]
   },
   {
     id: 33,
-    q: "'क', 'ग', 'घ' के खाली स्थान के लिए अक्षर चुनिए:",
+    q: "समान अक्षर को पहचानिए:",
     img: null,
     opts: [
-      { text: "च", img: null, correct: false },
-      { text: "ख", img: null, correct: true } // Key: B
+      { text: "ण", img: null, correct: false },
+      { text: "ज्ञ", img: null, correct: true }
     ]
   },
   {
     id: 34,
-    q: "चित्र देखकर सही अक्षर पहचानो:",
-    img: "images/hal.jpeg", // Plough (हल)
+    q: "चित्र से संबंधित अक्षर को पहचानिए:",
+    img: "images/p4_q34_umbrella.png", // Umbrella (छाता)
     opts: [
-      { text: "ह", img: null, correct: true }, // Key: A
-      { text: "अ", img: null, correct: false }
+      { text: "च", img: null, correct: false },
+      { text: "छ", img: null, correct: true }
+    ]
+  },
+  {
+    id: 35,
+    q: "'आ' ..... 'ई' के बीच में आता है:",
+    img: null,
+    opts: [
+      { text: "अ", img: null, correct: false },
+      { text: "इ", img: null, correct: true }
     ]
   },
 
-  // Page 15 (Q35 to Q37)
-  {
-    id: 35,
-    q: "'ई' अक्षर वाला चित्र है:",
-    img: null,
-    opts: [
-      { text: "सांप", img: "images/snake.jpeg", correct: false },
-      { text: "ईख", img: "images/sugarcane.jpeg", correct: true } // Key: B
-    ]
-  },
+  // Page 13 (Q36 to Q38)
   {
     id: 36,
-    q: "'च', 'छ', 'ज' के बाद खाली स्थान भरिए:",
-    img: null,
+    q: "चित्र से संबंधित अक्षर को पहचानिए:",
+    img: "images/p4_q36_kite.png", // Kite (पतंग)
     opts: [
-      { text: "त", img: null, correct: false },
-      { text: "झ", img: null, correct: true } // Key: B
+      { text: "ख", img: null, correct: false },
+      { text: "प", img: null, correct: true }
     ]
   },
   {
     id: 37,
-    q: "'ज्ञ' वाला चित्र है:",
+    q: "दिए गए अक्षर से अलग अक्षर को पहचानो:",
     img: null,
     opts: [
-      { text: "ज्ञानी", img: "images/gyani.jpeg", correct: true }, // Key: A
-      { text: "क्षत्रिय", img: "images/kshatriya.jpeg", correct: false }
+      { text: "झ", img: null, correct: false },
+      { text: "ट", img: null, correct: true }
+    ]
+  },
+  {
+    id: 38,
+    q: "चित्र से संबंधित अक्षर को पहचानिए:",
+    img: "images/p4_q38_owl.png", // Owl (उल्लू)
+    opts: [
+      { text: "अ", img: null, correct: false },
+      { text: "उ", img: null, correct: true }
     ]
   },
 
-  // Page 16 (Q38 to Q40)
-  {
-    id: 38,
-    q: "'प' अक्षर वाला चित्र है:",
-    img: null,
-    opts: [
-      { text: "पतंग", img: "images/kite.jpeg", correct: true }, // Key: A
-      { text: "घोड़ा", img: "images/horse.png", correct: false }
-    ]
-  },
+  // Page 14 (Q39 to Q40)
   {
     id: 39,
-    q: "चित्र देखकर अक्षर पहचानिए:",
-    img: "images/flower_pot.jpeg", // Flower pot / phool (फूल)
+    q: "'ई' ..... 'ऊ' के बीच में आता है:",
+    img: null,
     opts: [
-      { text: "क", img: null, correct: false },
-      { text: "फ", img: null, correct: true } // Key: B
+      { text: "उ", img: null, correct: true },
+      { text: "अ", img: null, correct: false }
     ]
   },
   {
     id: 40,
-    q: "'झ' अक्षर वाला चित्र है:",
+    q: "च ....... ज खाली स्थान भरिए:",
     img: null,
     opts: [
-      { text: "फल", img: "images/fruits.jpeg", correct: false },
-      { text: "झंडा", img: "images/indian_flag.jpeg", correct: true } // Key: B
+      { text: "छ", img: null, correct: true },
+      { text: "झ", img: null, correct: false }
     ]
   }
 ];
