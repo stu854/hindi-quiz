@@ -2,234 +2,591 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Toddler Hindi Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>नन्हे कदम (Nanhe Kadam) - Free Toddler Hindi Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+  
   <style>
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background: #FFF9E6; margin: 0; padding: 15px; user-select: none; }
-    .card { background: white; border-radius: 24px; padding: 20px; max-width: 520px; margin: auto; box-shadow: 0 6px 20px rgba(0,0,0,0.08); position: relative; min-height: 480px; display: flex; flex-direction: column; justify-content: space-between; }
-    .progress-bar { font-size: 1rem; color: #757575; font-weight: bold; margin-bottom: 8px; }
-    .q-title { font-size: 1.5rem; margin: 10px 0; color: #2C3E50; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    :root {
+      --primary: #FF7043;
+      --primary-dark: #E64A19;
+      --secondary: #4CAF50;
+      --secondary-dark: #2E7D32;
+      --accent: #FFD54F;
+      --bg-cream: #FFFDF7;
+      --card-bg: #FFFFFF;
+      --text-main: #2C3E50;
+      --text-muted: #64748B;
+      --border-radius: 20px;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', 'Baloo 2', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    /* Top Navigation */
+    .nav {
+      background: white;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand { font-size: 1.5rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    .nav-btn {
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      font-size: 0.95rem;
+    }
+    .btn-feedback { background: #ECEFF1; color: #455A64; }
+    .btn-logout { background: #FFEBEE; color: #C62828; display: none; }
+
+    /* Layout Container */
+    .container { max-width: 1050px; margin: auto; padding: 24px 16px; }
+
+    /* Hero / Status Banner */
+    .hero {
+      text-align: center;
+      padding: 24px 16px 36px;
+      background: linear-gradient(180deg, #FFF3E0 0%, var(--bg-cream) 100%);
+      border-radius: 28px;
+      margin-bottom: 30px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #E8F5E9;
+      color: var(--secondary-dark);
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 30px;
+      margin-bottom: 12px;
+    }
+    .hero h1 { font-size: 2.2rem; color: #D84315; margin-bottom: 10px; font-weight: 900; }
+    .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: auto; }
+
+    /* Parent Portal Card / Email Gate */
+    .parent-auth-card {
+      background: white;
+      border: 2px dashed #FFB74D;
+      border-radius: var(--border-radius);
+      padding: 24px;
+      max-width: 540px;
+      margin: 20px auto 0;
+      box-shadow: 0 8px 24px rgba(255, 112, 67, 0.08);
+    }
+    .auth-input-group { display: flex; gap: 10px; margin-top: 14px; }
+    .auth-input-group input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 2px solid #E2E8F0;
+      font-size: 1rem;
+      outline: none;
+    }
+    .auth-input-group input:focus { border-color: var(--primary); }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s transform;
+    }
+    .btn-primary:active { transform: scale(0.97); }
+
+    /* Dynamic "Welcome Back" Banner */
+    .parent-status-bar {
+      display: none;
+      background: #E8F5E9;
+      border: 2px solid #A5D6A7;
+      border-radius: 16px;
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* App Workspace / Quiz Arena */
+    .app-workspace {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .quiz-card {
+      background: white;
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      border: 2px solid #F1F5F9;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    /* Native Interactive Components */
+    .q-title { font-size: 1.7rem; font-weight: 800; color: #1E293B; margin: 12px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
     .q-img { max-height: 160px; max-width: 90%; border-radius: 16px; margin: 10px auto; object-fit: contain; }
-    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 15px; }
-    .opt-btn { background: #F4FBF7; border: 3px solid #81C784; border-radius: 20px; padding: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 150px; font-size: 1.4rem; font-weight: bold; transition: transform 0.15s, border-color 0.2s, background-color 0.2s; }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .opt-btn {
+      background: #F8FAFC;
+      border: 3px solid #E2E8F0;
+      border-radius: 22px;
+      padding: 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 150px;
+      font-size: 1.4rem;
+      font-weight: 800;
+      transition: all 0.2s ease;
+    }
+    .opt-btn:hover { border-color: #81C784; background: #F4FBF7; }
     .opt-btn:active { transform: scale(0.96); }
-    .opt-btn img { max-height: 95px; max-width: 90%; margin-bottom: 8px; object-fit: contain; }
-    .speaker-btn { background: #FFD54F; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 20px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px rgba(0,0,0,0.15); }
-    .feedback-banner { min-height: 36px; font-size: 1.3rem; font-weight: bold; margin-top: 12px; }
-    .correct-anim { background: #C8E6C9 !important; border-color: #2E7D32 !important; transform: scale(1.03); }
+    .opt-btn img { max-height: 90px; max-width: 90%; margin-bottom: 8px; object-fit: contain; }
+    .speaker-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      font-size: 18px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(255, 213, 79, 0.4);
+    }
+    .correct-anim { background: #C8E6C9 !important; border-color: #2E7D32 !important; transform: scale(1.02); }
     .wrong-anim { background: #FFCDD2 !important; border-color: #C62828 !important; }
+
+    /* Value & Features Sections */
+    .section-title { font-size: 1.6rem; font-weight: 900; margin-bottom: 18px; text-align: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin: 40px 0; }
+    .feature-box {
+      background: white;
+      padding: 24px;
+      border-radius: 20px;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .feature-box h3 { font-size: 1.2rem; color: #D84315; margin: 10px 0 6px; }
+    .feature-box p { font-size: 0.95rem; color: var(--text-muted); }
+
+    /* Modal Sheet for Feedback */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-card {
+      background: white;
+      border-radius: 24px;
+      padding: 28px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .modal-card h2 { margin-bottom: 8px; color: var(--text-main); }
+    .modal-card textarea, .modal-card input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid #E2E8F0;
+      margin-top: 10px;
+      font-family: inherit;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.7rem; }
+      .auth-input-group { flex-direction: column; }
+      .options-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-<div class="card" id="quiz-box">
-  <div style="margin: auto;">
-    <h1 style="font-size: 2rem; color: #2E7D32;">नमस्ते! 🌟</h1>
-    <p style="font-size: 1.2rem; color: #555;">हिंदी अभ्यास शुरू करें</p>
-    <button onclick="showMenu()" style="font-size: 1.5rem; padding: 16px 36px; border-radius: 16px; background: #4CAF50; color: white; border: none; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(76,175,80,0.4);">शुरू करें (Start)</button>
+  <!-- App Header -->
+  <header class="nav">
+    <div class="brand">👶 नन्हे कदम</div>
+    <div class="nav-actions">
+      <button class="nav-btn btn-feedback" onclick="openFeedbackModal()">💬 सुझाव / Feedback</button>
+      <button class="nav-btn btn-logout" id="logout-btn" onclick="logoutParent()">लॉगआउट</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Top Returning Parent Tracker -->
+    <div class="parent-status-bar" id="parent-status-bar">
+      <div>
+        <strong>नमस्ते, <span id="display-parent-email"></span>! 👋</strong>
+        <p style="font-size: 0.85rem; color: #333;" id="parent-activity-summary">पिछली गतिविधि: कोई रिकॉर्ड नहीं मिला</p>
+      </div>
+      <span style="background: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: var(--secondary-dark);">🌟 100% Free Access Active</span>
+    </div>
+
+    <!-- Hero Header -->
+    <section class="hero">
+      <div class="hero-badge">✨ 100% Free Forever • No Ads • Kid Safe</div>
+      <h1>छोटे बच्चों के लिए सहज हिंदी शिक्षा</h1>
+      <p>Interactive, voice-assisted early Hindi phonetics and visual recognition built specifically for toddlers and nursery kids.</p>
+
+      <!-- Parent Email Capture Gate -->
+      <div class="parent-auth-card" id="auth-gate">
+        <h2 style="font-size: 1.25rem; color: var(--primary-dark);">माता-पिता के लिए निःशुल्क एक्सेस 🎁</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">
+          क्विज़ अनलॉक करने के लिए अपना ईमेल दर्ज करें। हम आपकी प्रगति को याद रखेंगे।
+        </p>
+        <form onsubmit="handleParentLogin(event)" class="auth-input-group">
+          <input type="email" id="parent-email-input" placeholder="माता-पिता का ईमेल (e.g. parent@gmail.com)" required>
+          <button type="submit" class="btn-primary">अनलॉक करें 🚀</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- App Content / Quiz Arena -->
+    <main class="app-workspace">
+      <div class="quiz-card" id="quiz-box">
+        <div style="margin: auto;">
+          <h2 style="font-size: 2rem; color: var(--secondary-dark); margin-bottom: 8px;">नमस्ते प्यारे बच्चों! 🌟</h2>
+          <p style="font-size: 1.1rem; color: #64748B; margin-bottom: 20px;">हिंदी शब्दों और ध्वनियों का जादुई खेल</p>
+          <button onclick="showMenu()" class="btn-primary" style="font-size: 1.3rem; padding: 14px 36px; border-radius: 16px;">
+            अभ्यास शुरू करें (Start Quiz)
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Why Us & Offerings Grid -->
+    <section style="margin-top: 50px;">
+      <h2 class="section-title">हमारा उद्देश्य और विशेषताएं 💡</h2>
+      <div class="grid-3">
+        <div class="feature-box">
+          <div style="font-size: 2rem;">🎙️</div>
+          <h3>Natural Audio & Speech</h3>
+          <p>Every option is voiced in clear Hindi phonetics so toddlers can hear the word independently.</p>
+        </div>
+        <div class="feature-box">
+          <div style="font-size: 2rem;">🛡️</div>
+          <h3>100% Free & No Distractions</h3>
+          <p>Created for public benefit. No subscriptions, no hidden microtransactions, and zero ads.</p>
+        </div>
+        <div class="feature-box">
+          <div style="font-size: 2rem;">🧠</div>
+          <h3>Parent Progress Memory</h3>
+          <p>We automatically remember your completed quizzes and let you pick up right where your child left off.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What's New Section -->
+    <section style="background: white; border-radius: 24px; padding: 24px; border: 1px solid #E2E8F0; margin-bottom: 40px;">
+      <h3 style="color: var(--primary); margin-bottom: 10px;">📢 नया क्या है? (What's New)</h3>
+      <ul style="padding-left: 20px; color: var(--text-muted); font-size: 0.95rem;">
+        <li><strong>Sample Paper 4 जोड़ा गया:</strong> फल, जानवर और बुनियादी वस्तुओं के नए चित्र और ऑडियो।</li>
+        <li><strong>Smart Auto-Read:</strong> स्क्रीन खुलते ही सवाल और विकल्प बच्चों के लिए खुद बोले जाते हैं।</li>
+        <li><strong>Parent Activity Tracker:</strong> आपके बच्चे का आखिरी स्कोर और अभ्यास अब सेव रहता है।</li>
+      </ul>
+    </section>
+
   </div>
-</div>
 
-<!-- Load all quiz datasets -->
-<script src="quizzes/quiz1.js"></script>
-<script src="quizzes/quiz2.js"></script>
-<script src="quizzes/quiz3.js"></script>
-<script src="quizzes/quiz4.js"></script>
+  <!-- Feedback / Contact Modal -->
+  <div class="modal-overlay" id="feedback-modal">
+    <div class="modal-card">
+      <h2>सुझाव या संपर्क (Feedback)</h2>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">यह एक गैर-व्यावसायिक पहल है। आपके सुझाव हमारे लिए महत्वपूर्ण हैं।</p>
+      <form onsubmit="submitFeedback(event)">
+        <input type="text" id="feedback-name" placeholder="आपका नाम (Your Name)" required>
+        <textarea id="feedback-msg" rows="4" placeholder="सुझाव या कोई समस्या लिखें..." required></textarea>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px;">
+          <button type="button" onclick="closeFeedbackModal()" class="nav-btn btn-feedback">रद्द करें</button>
+          <button type="submit" class="btn-primary">भेजें</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-<script>
-const allQuizzes = {
-  paper1: { title: "अभ्यास 1 (Sample Paper 1)", data: (typeof quiz1 !== 'undefined' ? quiz1 : []), icon: "🍎" },
-  paper2: { title: "अभ्यास 2 (Sample Paper 2)", data: (typeof quiz2 !== 'undefined' ? quiz2 : []), icon: "🐘" },
-  paper3: { title: "अभ्यास 3 (Sample Paper 3)", data: (typeof quiz3 !== 'undefined' ? quiz3 : []), icon: "🦜" },
-  paper4: { title: "अभ्यास 4 (Sample Paper 4)", data: (typeof quiz4 !== 'undefined' ? quiz4 : []), icon: "🌟" }
-};
+  <!-- Quizzes Fallback Data if files not yet present -->
+  <script>
+    const sampleFallbackQuiz = [
+      { q: "इनमें से 'आम' (Mango) कौन सा है?", opts: [{ text: "आम 🥭", correct: true }, { text: "सेब 🍎", correct: false }] },
+      { q: "'क' से क्या होता है?", opts: [{ text: "कबूतर 🕊️", correct: true }, { text: "खरगोश 🐇", correct: false }] }
+    ];
+  </script>
+  <script src="quizzes/quiz1.js"></script>
+  <script src="quizzes/quiz2.js"></script>
+  <script src="quizzes/quiz3.js"></script>
+  <script src="quizzes/quiz4.js"></script>
 
-let currentQuizData = [];
-let currentIndex = 0;
-let isAnsweringBlocked = false;
+  <script>
+    // App State
+    const allQuizzes = {
+      paper1: { title: "अभ्यास 1 (Sample Paper 1)", data: (typeof quiz1 !== 'undefined' ? quiz1 : sampleFallbackQuiz), icon: "🍎" },
+      paper2: { title: "अभ्यास 2 (Sample Paper 2)", data: (typeof quiz2 !== 'undefined' ? quiz2 : sampleFallbackQuiz), icon: "🐘" },
+      paper3: { title: "अभ्यास 3 (Sample Paper 3)", data: (typeof quiz3 !== 'undefined' ? quiz3 : sampleFallbackQuiz), icon: "🦜" },
+      paper4: { title: "अभ्यास 4 (Sample Paper 4)", data: (typeof quiz4 !== 'undefined' ? quiz4 : sampleFallbackQuiz), icon: "🌟" }
+    };
 
-// Speech engine helper
-function speakHindi(text, onEndCallback = null) {
-  if (!('speechSynthesis' in window)) return;
-  
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'hi-IN';
-  utterance.rate = 0.85;
-  utterance.pitch = 1.05;
+    let currentQuizKey = 'paper1';
+    let currentQuizData = [];
+    let currentIndex = 0;
+    let isAnsweringBlocked = false;
 
-  const voices = window.speechSynthesis.getVoices();
-  const hindiVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('hi-IN'));
-  if (hindiVoice) utterance.voice = hindiVoice;
+    // Initialization & State Restoration
+    window.addEventListener('DOMContentLoaded', () => {
+      checkParentSession();
+    });
 
-  if (onEndCallback) {
-    utterance.onend = onEndCallback;
-  }
+    function checkParentSession() {
+      const parentEmail = localStorage.getItem('parent_email');
+      const authGate = document.getElementById('auth-gate');
+      const statusBar = document.getElementById('parent-status-bar');
+      const logoutBtn = document.getElementById('logout-btn');
 
-  window.speechSynthesis.speak(utterance);
-}
+      if (parentEmail) {
+        if (authGate) authGate.style.display = 'none';
+        statusBar.style.display = 'flex';
+        logoutBtn.style.display = 'block';
+        document.getElementById('display-parent-email').innerText = parentEmail;
 
-// Speaks Question -> Option 1 -> Option 2 in sequence
-function readEntireCard(item) {
-  window.speechSynthesis.cancel();
-  if (!item) return;
+        const lastActive = localStorage.getItem('last_quiz_attempted');
+        const lastDate = localStorage.getItem('last_quiz_date');
+        if (lastActive) {
+          document.getElementById('parent-activity-summary').innerText = `पिछला अभ्यास: ${allQuizzes[lastActive]?.title || lastActive} (${lastDate || 'हाल ही में'})`;
+        }
+      } else {
+        if (authGate) authGate.style.display = 'block';
+        statusBar.style.display = 'none';
+        logoutBtn.style.display = 'none';
+      }
+    }
 
-  speakHindi(item.q, () => {
-    if (item.opts && item.opts[0]) {
-      speakHindi("पहला ऑप्शन : " + item.opts[0].text, () => {
-        if (item.opts && item.opts[1]) {
-          speakHindi("दूसरा ऑप्शन : " + item.opts[1].text);
+    function handleParentLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('parent-email-input').value.trim();
+      if (email) {
+        localStorage.setItem('parent_email', email);
+        checkParentSession();
+        speakHindi("स्वागत है! आप अब सभी क्विज़ शुरू कर सकते हैं।");
+      }
+    }
+
+    function logoutParent() {
+      localStorage.removeItem('parent_email');
+      checkParentSession();
+      showMenu();
+    }
+
+    // Audio Engine
+    function speakHindi(text, onEndCallback = null) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'hi-IN';
+      utterance.rate = 0.85;
+      utterance.pitch = 1.05;
+
+      const voices = window.speechSynthesis.getVoices();
+      const hindiVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('hi-IN'));
+      if (hindiVoice) utterance.voice = hindiVoice;
+
+      if (onEndCallback) utterance.onend = onEndCallback;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function readEntireCard(item) {
+      if (!item) return;
+      speakHindi(item.q, () => {
+        if (item.opts && item.opts[0]) {
+          speakHindi("पहला विकल्प: " + item.opts[0].text, () => {
+            if (item.opts && item.opts[1]) {
+              speakHindi("दूसरा विकल्प: " + item.opts[1].text);
+            }
+          });
         }
       });
     }
-  });
-}
 
-function replayQuestion() {
-  window.speechSynthesis.cancel();
-  if (currentQuizData && currentQuizData[currentIndex]) {
-    readEntireCard(currentQuizData[currentIndex]);
-  }
-}
-
-function replayOption(optIdx) {
-  window.speechSynthesis.cancel();
-  if (currentQuizData && currentQuizData[currentIndex] && currentQuizData[currentIndex].opts[optIdx]) {
-    speakHindi(currentQuizData[currentIndex].opts[optIdx].text);
-  }
-}
-
-// Menu Screen
-function showMenu() {
-  window.speechSynthesis.cancel();
-  const container = document.getElementById('quiz-box');
-  
-  let menuHtml = `
-    <h1 style="font-size: 1.8rem; color: #2E7D32; margin-bottom: 15px;">क्विज़ चुनें 📚</h1>
-    <div style="display: flex; flex-direction: column; gap: 12px; margin: auto; width: 100%;">
-  `;
-
-  for (const key in allQuizzes) {
-    const item = allQuizzes[key];
-    menuHtml += `
-      <button onclick="selectQuiz('${key}')" style="
-        font-size: 1.3rem;
-        padding: 14px;
-        border-radius: 16px;
-        background: #E8F5E9;
-        border: 2px solid #81C784;
-        cursor: pointer;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-      ">
-        <span>${item.icon}</span> ${item.title}
-      </button>
-    `;
-  }
-
-  menuHtml += `</div>`;
-  container.innerHTML = menuHtml;
-  speakHindi("कृपया कोई एक क्विज़ चुनें");
-}
-
-function selectQuiz(quizKey) {
-  currentQuizData = allQuizzes[quizKey].data;
-  if (!currentQuizData || currentQuizData.length === 0) {
-    alert("यह क्विज़ फ़ाइल अभी उपलब्ध नहीं है। कृपया फ़ाइल लोड चेक करें।");
-    return;
-  }
-  currentIndex = 0;
-  loadQuestion();
-}
-
-function loadQuestion() {
-  isAnsweringBlocked = false;
-  const item = currentQuizData[currentIndex];
-  const container = document.getElementById('quiz-box');
-
-  let html = `
-    <div>
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <button onclick="showMenu()" style="background: #EEE; border: none; border-radius: 10px; padding: 6px 12px; font-weight: bold; cursor: pointer;">🏠 मेनू</button>
-        <div class="progress-bar">प्रश्न ${currentIndex + 1} / ${currentQuizData.length}</div>
-      </div>
-      <div class="q-title">
-        <span>${item.q}</span>
-        <button class="speaker-btn" type="button" onclick="replayQuestion()">🔊</button>
-      </div>
-      ${item.img ? `<img src="${item.img}" class="q-img" onerror="this.style.display='none'">` : ''}
-    </div>
-    
-    <div>
-      <div class="options-grid">`;
-
-  item.opts.forEach((opt, optIdx) => {
-    html += `
-      <div class="opt-btn" id="opt-${optIdx}" onclick="handleOptionClick(${opt.correct}, ${optIdx})">
-        <button class="speaker-btn" style="width:34px; height:34px; font-size:14px; margin-bottom:6px;" 
-                type="button"
-                onclick="event.stopPropagation(); replayOption(${optIdx});">🔊</button>
-        ${opt.img ? `<img src="${opt.img}" onerror="this.style.display='none'">` : ''}
-        <span>${opt.text}</span>
-      </div>`;
-  });
-
-  html += `
-      </div>
-      <div class="feedback-banner" id="feedback-text"></div>
-    </div>`;
-
-  container.innerHTML = html;
-  readEntireCard(item);
-}
-
-function handleOptionClick(isCorrect, optIdx) {
-  if (isAnsweringBlocked) return;
-  window.speechSynthesis.cancel();
-
-  const selectedBtn = document.getElementById(`opt-${optIdx}`);
-  const feedbackEl = document.getElementById('feedback-text');
-
-  if (isCorrect) {
-    isAnsweringBlocked = true;
-    selectedBtn.classList.add('correct-anim');
-    feedbackEl.innerHTML = "<span style='color:#2E7D32;'>🎉 शाबाश! बहुत बढ़िया!</span>";
-    speakHindi("शाबाश! बहुत बढ़िया!");
-
-    setTimeout(() => {
-      currentIndex++;
-      if (currentIndex < currentQuizData.length) {
-        loadQuestion();
-      } else {
-        showCelebrationScreen();
+    function replayQuestion() {
+      if (currentQuizData && currentQuizData[currentIndex]) {
+        readEntireCard(currentQuizData[currentIndex]);
       }
-    }, 1500);
+    }
 
-  } else {
-    selectedBtn.classList.add('wrong-anim');
-    feedbackEl.innerHTML = "<span style='color:#C62828;'>❌ फिर से कोशिश करो</span>";
-    speakHindi("गलत उत्तर, फिर से कोशिश करो");
+    function replayOption(optIdx) {
+      if (currentQuizData && currentQuizData[currentIndex]?.opts[optIdx]) {
+        speakHindi(currentQuizData[currentIndex].opts[optIdx].text);
+      }
+    }
 
-    setTimeout(() => {
-      selectedBtn.classList.remove('wrong-anim');
-    }, 700);
-  }
-}
+    // Navigation & Rendering
+    function showMenu() {
+      window.speechSynthesis.cancel();
+      const container = document.getElementById('quiz-box');
+      
+      let menuHtml = `
+        <h2 style="font-size: 1.8rem; color: var(--secondary-dark); margin-bottom: 15px;">अभ्यास चुनें 📚</h2>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin: auto; width: 100%; max-width: 420px;">
+      `;
 
-function showCelebrationScreen() {
-  const container = document.getElementById('quiz-box');
-  speakHindi("बधाई हो! आपने सभी प्रश्न पूरे कर लिए हैं!");
-  container.innerHTML = `
-    <div style="margin: auto;">
-      <h1 style="font-size: 3rem; margin: 0;">🏆 ⭐ 🎈</h1>
-      <h2 style="color: #2E7D32; font-size: 1.8rem; margin: 15px 0;">शानदार काम!</h2>
-      <p style="font-size: 1.2rem; color: #555;">आपने सभी सवाल हल कर लिए!</p>
-      <button onclick="showMenu()" style="font-size: 1.3rem; padding: 14px 28px; border-radius: 14px; background: #FF9800; color: white; border: none; font-weight: bold; cursor: pointer;">मेनू पर जाएँ (Back to Menu)</button>
-    </div>`;
-}
-</script>
+      for (const key in allQuizzes) {
+        const item = allQuizzes[key];
+        menuHtml += `
+          <button onclick="selectQuiz('${key}')" class="opt-btn" style="min-height: 60px; flex-direction: row; justify-content: flex-start; gap: 14px; font-size: 1.15rem; padding: 12px 20px;">
+            <span style="font-size: 1.6rem;">${item.icon}</span> ${item.title}
+          </button>
+        `;
+      }
+
+      menuHtml += `</div>`;
+      container.innerHTML = menuHtml;
+      speakHindi("कृपया कोई एक अभ्यास चुनें");
+    }
+
+    function selectQuiz(quizKey) {
+      currentQuizKey = quizKey;
+      currentQuizData = allQuizzes[quizKey].data;
+      
+      // Save last accessed quiz in parent memory
+      localStorage.setItem('last_quiz_attempted', quizKey);
+      localStorage.setItem('last_quiz_date', new Date().toLocaleDateString('hi-IN'));
+      checkParentSession();
+
+      if (!currentQuizData || currentQuizData.length === 0) {
+        alert("यह क्विज़ फ़ाइल उपलब्ध नहीं है।");
+        return;
+      }
+      currentIndex = 0;
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      isAnsweringBlocked = false;
+      const item = currentQuizData[currentIndex];
+      const container = document.getElementById('quiz-box');
+
+      let html = `
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button onclick="showMenu()" style="background: #ECEFF1; border: none; border-radius: 10px; padding: 8px 14px; font-weight: bold; cursor: pointer;">🏠 मेनू</button>
+            <div style="font-weight: 800; color: #64748B;">प्रश्न ${currentIndex + 1} / ${currentQuizData.length}</div>
+          </div>
+          <div class="q-title">
+            <span>${item.q}</span>
+            <button class="speaker-btn" type="button" onclick="replayQuestion()">🔊</button>
+          </div>
+          ${item.img ? `<img src="${item.img}" class="q-img" onerror="this.style.display='none'">` : ''}
+        </div>
+        
+        <div>
+          <div class="options-grid">`;
+
+      item.opts.forEach((opt, optIdx) => {
+        html += `
+          <div class="opt-btn" id="opt-${optIdx}" onclick="handleOptionClick(${opt.correct}, ${optIdx})">
+            <button class="speaker-btn" style="width:32px; height:32px; font-size:13px; margin-bottom:6px;" 
+                    type="button" 
+                    onclick="event.stopPropagation(); replayOption(${optIdx});">🔊</button>
+            ${opt.img ? `<img src="${opt.img}" onerror="this.style.display='none'">` : ''}
+            <span>${opt.text}</span>
+          </div>`;
+      });
+
+      html += `
+          </div>
+          <div style="min-height: 32px; font-size: 1.3rem; font-weight: 800; margin-top: 14px;" id="feedback-text"></div>
+        </div>`;
+
+      container.innerHTML = html;
+      readEntireCard(item);
+    }
+
+    function handleOptionClick(isCorrect, optIdx) {
+      if (isAnsweringBlocked) return;
+      window.speechSynthesis.cancel();
+
+      const selectedBtn = document.getElementById(`opt-${optIdx}`);
+      const feedbackEl = document.getElementById('feedback-text');
+
+      if (isCorrect) {
+        isAnsweringBlocked = true;
+        selectedBtn.classList.add('correct-anim');
+        feedbackEl.innerHTML = "<span style='color: #2E7D32;'>🎉 शाबाश! बहुत बढ़िया!</span>";
+        speakHindi("शाबाश! बहुत बढ़िया!");
+
+        setTimeout(() => {
+          currentIndex++;
+          if (currentIndex < currentQuizData.length) {
+            loadQuestion();
+          } else {
+            showCelebrationScreen();
+          }
+        }, 1500);
+      } else {
+        selectedBtn.classList.add('wrong-anim');
+        feedbackEl.innerHTML = "<span style='color: #C62828;'>❌ फिर से कोशिश करो</span>";
+        speakHindi("गलत उत्तर, फिर से कोशिश करो");
+
+        setTimeout(() => {
+          selectedBtn.classList.remove('wrong-anim');
+        }, 700);
+      }
+    }
+
+    function showCelebrationScreen() {
+      const container = document.getElementById('quiz-box');
+      speakHindi("बधाई हो! आपने सभी प्रश्न पूरे कर लिए हैं!");
+      container.innerHTML = `
+        <div style="margin: auto;">
+          <h1 style="font-size: 3.5rem; margin-bottom: 8px;">🏆 ⭐ 🎈</h1>
+          <h2 style="color: var(--secondary-dark); font-size: 2rem; margin-bottom: 8px;">शानदार काम!</h2>
+          <p style="font-size: 1.2rem; color: #64748B; margin-bottom: 20px;">आपने यह अभ्यास पूरा कर लिया!</p>
+          <button onclick="showMenu()" class="btn-primary" style="font-size: 1.2rem; padding: 12px 28px;">दूसरा अभ्यास चुनें (Next)</button>
+        </div>`;
+    }
+
+    // Feedback Modal Controls
+    function openFeedbackModal() {
+      document.getElementById('feedback-modal').style.display = 'flex';
+    }
+    function closeFeedbackModal() {
+      document.getElementById('feedback-modal').style.display = 'none';
+    }
+    function submitFeedback(e) {
+      e.preventDefault();
+      alert("धन्यवाद! आपका सुझाव दर्ज कर लिया गया है।");
+      closeFeedbackModal();
+    }
+  </script>
 </body>
 </html>
