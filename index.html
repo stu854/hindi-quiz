@@ -38,19 +38,68 @@
 <script src="quizzes/quiz4.js"></script>
 
 <script>
-  
 const allQuizzes = {
-  paper1: { title: "अभ्यास 1 (Sample Paper 1)", data: quiz1, icon: "🍎" },
-  paper2: { title: "अभ्यास 2 (Sample Paper 2)", data: quiz2, icon: "🐘" },
-  paper3: { title: "अभ्यास 3 (Sample Paper 3)", data: quiz3, icon: "🦜" },
-  paper4: { title: "अभ्यास 4 (Sample Paper 4)", data: quiz4, icon: "🌟" }
+  paper1: { title: "अभ्यास 1 (Sample Paper 1)", data: (typeof quiz1 !== 'undefined' ? quiz1 : []), icon: "🍎" },
+  paper2: { title: "अभ्यास 2 (Sample Paper 2)", data: (typeof quiz2 !== 'undefined' ? quiz2 : []), icon: "🐘" },
+  paper3: { title: "अभ्यास 3 (Sample Paper 3)", data: (typeof quiz3 !== 'undefined' ? quiz3 : []), icon: "🦜" },
+  paper4: { title: "अभ्यास 4 (Sample Paper 4)", data: (typeof quiz4 !== 'undefined' ? quiz4 : []), icon: "🌟" }
 };
 
 let currentQuizData = [];
 let currentIndex = 0;
 let isAnsweringBlocked = false;
 
-// Show Quiz Selection Menu on startup
+// Speech engine helper
+function speakHindi(text, onEndCallback = null) {
+  if (!('speechSynthesis' in window)) return;
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'hi-IN';
+  utterance.rate = 0.85;
+  utterance.pitch = 1.05;
+
+  const voices = window.speechSynthesis.getVoices();
+  const hindiVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('hi-IN'));
+  if (hindiVoice) utterance.voice = hindiVoice;
+
+  if (onEndCallback) {
+    utterance.onend = onEndCallback;
+  }
+
+  window.speechSynthesis.speak(utterance);
+}
+
+// Speaks Question -> Option 1 -> Option 2 in sequence
+function readEntireCard(item) {
+  window.speechSynthesis.cancel();
+  if (!item) return;
+
+  speakHindi(item.q, () => {
+    if (item.opts && item.opts[0]) {
+      speakHindi("पहला: " + item.opts[0].text, () => {
+        if (item.opts && item.opts[1]) {
+          speakHindi("दूसरा: " + item.opts[1].text);
+        }
+      });
+    }
+  });
+}
+
+function replayQuestion() {
+  window.speechSynthesis.cancel();
+  if (currentQuizData && currentQuizData[currentIndex]) {
+    readEntireCard(currentQuizData[currentIndex]);
+  }
+}
+
+function replayOption(optIdx) {
+  window.speechSynthesis.cancel();
+  if (currentQuizData && currentQuizData[currentIndex] && currentQuizData[currentIndex].opts[optIdx]) {
+    speakHindi(currentQuizData[currentIndex].opts[optIdx].text);
+  }
+}
+
+// Menu Screen
 function showMenu() {
   window.speechSynthesis.cancel();
   const container = document.getElementById('quiz-box');
@@ -88,52 +137,17 @@ function showMenu() {
 
 function selectQuiz(quizKey) {
   currentQuizData = allQuizzes[quizKey].data;
-  currentIndex = 0;
-  loadQuestion();
-}
-
-// Unified Speech Function with Optional 'On Finish' Callback
-function speakHindi(text, onEndCallback = null) {
-  if (!('speechSynthesis' in window)) return;
-  
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'hi-IN';
-  utterance.rate = 0.85; // Toddler friendly speed
-  utterance.pitch = 1.05;
-
-  const voices = window.speechSynthesis.getVoices();
-  const hindiVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('hi-IN'));
-  if (hindiVoice) utterance.voice = hindiVoice;
-
-  if (onEndCallback) {
-    utterance.onend = onEndCallback;
+  if (!currentQuizData || currentQuizData.length === 0) {
+    alert("यह क्विज़ फ़ाइल अभी उपलब्ध नहीं है। कृपया फ़ाइल लोड चेक करें।");
+    return;
   }
-
-  window.speechSynthesis.speak(utterance);
-}
-
-// Speaks Question -> Option 1 -> Option 2 in sequence
-function readEntireCard(item) {
-  window.speechSynthesis.cancel(); // Stop any pending speech
-
-  // 1. Speak Question
-  speakHindi(item.q, () => {
-    // 2. Speak Option 1
-    speakHindi("पहला: " + item.opts[0].text, () => {
-      // 3. Speak Option 2      
-      speakHindi("दूसरा: " + item.opts[1].text);
-    });
-  });
-}
-
-function startQuiz() {
   currentIndex = 0;
   loadQuestion();
 }
 
 function loadQuestion() {
   isAnsweringBlocked = false;
-  const item = currentQuizData[currentIndex]; // Uses selected quiz
+  const item = currentQuizData[currentIndex];
   const container = document.getElementById('quiz-box');
 
   let html = `
@@ -144,7 +158,7 @@ function loadQuestion() {
       </div>
       <div class="q-title">
         <span>${item.q}</span>
-        <button class="speaker-btn" onclick="readEntireCard(currentQuizData[currentIndex])">🔊</button>
+        <button class="speaker-btn" type="button" onclick="replayQuestion()">🔊</button>
       </div>
       ${item.img ? `<img src="${item.img}" class="q-img" onerror="this.style.display='none'">` : ''}
     </div>
@@ -156,7 +170,8 @@ function loadQuestion() {
     html += `
       <div class="opt-btn" id="opt-${optIdx}" onclick="handleOptionClick(${opt.correct}, ${optIdx})">
         <button class="speaker-btn" style="width:34px; height:34px; font-size:14px; margin-bottom:6px;" 
-                onclick="event.stopPropagation(); window.speechSynthesis.cancel(); speakHindi('${opt.text}');">🔊</button>
+                type="button"
+                onclick="event.stopPropagation(); replayOption(${optIdx});">🔊</button>
         ${opt.img ? `<img src="${opt.img}" onerror="this.style.display='none'">` : ''}
         <span>${opt.text}</span>
       </div>`;
@@ -173,7 +188,7 @@ function loadQuestion() {
 
 function handleOptionClick(isCorrect, optIdx) {
   if (isAnsweringBlocked) return;
-  window.speechSynthesis.cancel(); // Stop narrator when child taps
+  window.speechSynthesis.cancel();
 
   const selectedBtn = document.getElementById(`opt-${optIdx}`);
   const feedbackEl = document.getElementById('feedback-text');
@@ -203,19 +218,6 @@ function handleOptionClick(isCorrect, optIdx) {
     }, 700);
   }
 }
-  
-function replayQuestion() {
-  window.speechSynthesis.cancel();
-  // Works with single quiz or multi-quiz setup
-  const currentItem = (typeof currentQuizData !== 'undefined' && currentQuizData.length > 0) 
-    ? currentQuizData[currentIndex] 
-    : quiz[currentIndex];
-
-  if (currentItem) {
-    // Re-reads the question followed by option 1 and option 2
-    readEntireCard(currentItem);
-  }
-}
 
 function showCelebrationScreen() {
   const container = document.getElementById('quiz-box');
@@ -225,7 +227,7 @@ function showCelebrationScreen() {
       <h1 style="font-size: 3rem; margin: 0;">🏆 ⭐ 🎈</h1>
       <h2 style="color: #2E7D32; font-size: 1.8rem; margin: 15px 0;">शानदार काम!</h2>
       <p style="font-size: 1.2rem; color: #555;">आपने सभी सवाल हल कर लिए!</p>
-      <button onclick="startQuiz()" style="font-size: 1.3rem; padding: 14px 28px; border-radius: 14px; background: #FF9800; color: white; border: none; font-weight: bold; cursor: pointer;">फिर से खेलें (Play Again)</button>
+      <button onclick="showMenu()" style="font-size: 1.3rem; padding: 14px 28px; border-radius: 14px; background: #FF9800; color: white; border: none; font-weight: bold; cursor: pointer;">मेनू पर जाएँ (Back to Menu)</button>
     </div>`;
 }
 </script>
