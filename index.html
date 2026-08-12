@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toddler Hindi Quiz</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #FFF9E6; margin: 0; padding: 20px; }
+    .card { background: white; border-radius: 20px; padding: 20px; max-width: 500px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .q-img { max-height: 180px; border-radius: 12px; margin: 10px 0; }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+    .opt-btn { background: #E8F5E9; border: 3px solid #81C784; border-radius: 16px; padding: 15px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 140px; font-size: 1.2rem; }
+    .opt-btn img { max-height: 90px; margin-bottom: 8px; }
+    .speaker-btn { background: #FFD54F; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 20px; cursor: pointer; margin-left: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="card" id="quiz-box">
+  <button id="start-btn" onclick="startQuiz()" style="font-size: 1.5rem; padding: 15px 30px; border-radius: 12px; background: #4CAF50; color: white; border: none;">शुरू करें (Start)</button>
+</div>
+
+<script>
+const quiz = [
+  {
+    q: "इनमें से सेब कौन सा है?",
+    img: null,
+    opts: [
+      { text: "सेब", img: "https://openclipart.org/image/300px/295777", correct: true },
+      { text: "केला", img: "https://openclipart.org/image/300px/281691", correct: false }
+    ]
+  }
+];
+
+let index = 0;
+
+function speak(text) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'hi-IN';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+function startQuiz() {
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const item = quiz[index];
+  const container = document.getElementById('quiz-box');
+  
+  let html = `<h2 style="font-size: 1.6rem;">${item.q} <button class="speaker-btn" onclick="speak('${item.q}')">🔊</button></h2>`;
+  if (item.img) html += `<img src="${item.img}" class="q-img">`;
+  
+  html += `<div class="options-grid">`;
+  item.opts.forEach((opt) => {
+    html += `
+      <div class="opt-btn" onclick="checkAnswer(${opt.correct})">
+        ${opt.img ? `<img src="${opt.img}">` : ''}
+        <span>${opt.text}</span>
+      </div>`;
+  });
+  html += `</div>`;
+  
+  container.innerHTML = html;
+  speak(item.q);
+}
+
+function checkAnswer(isCorrect) {
+  if (isCorrect) {
+    speak("बहुत बढ़िया! शाबाश!");
+    alert("🎉 सही उत्तर!");
+  } else {
+    speak("गलत उत्तर, फिर से कोशिश करो!");
+  }
+}
+</script>
+</body>
+</html>
