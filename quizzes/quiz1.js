@@ -1,4 +1,4 @@
-const quiz = [
+const quiz1 = [
   // Page 1 (Q1 to Q3)
   {
     id: 1,
