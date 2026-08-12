@@ -428,18 +428,41 @@ const quiz = [
 let currentIndex = 0;
 let isAnsweringBlocked = false;
 
-function speak(text) {
+let currentIndex = 0;
+let isAnsweringBlocked = false;
+
+// Unified Speech Function with Optional 'On Finish' Callback
+function speakHindi(text, onEndCallback = null) {
   if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'hi-IN';
-  u.rate = 0.85;
   
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'hi-IN';
+  utterance.rate = 0.85; // Toddler friendly speed
+  utterance.pitch = 1.05;
+
   const voices = window.speechSynthesis.getVoices();
   const hindiVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('hi-IN'));
-  if (hindiVoice) u.voice = hindiVoice;
-  
-  window.speechSynthesis.speak(u);
+  if (hindiVoice) utterance.voice = hindiVoice;
+
+  if (onEndCallback) {
+    utterance.onend = onEndCallback;
+  }
+
+  window.speechSynthesis.speak(utterance);
+}
+
+// Speaks Question -> Option 1 -> Option 2 in sequence
+function readEntireCard(item) {
+  window.speechSynthesis.cancel(); // Stop any pending speech
+
+  // 1. Speak Question
+  speakHindi(item.q, () => {
+    // 2. Speak Option 1
+    speakHindi("पहला: " + item.opts[0].text, () => {
+      // 3. Speak Option 2
+      speakHindi("दूसरा: " + item.opts[1].text);
+    });
+  });
 }
 
 function startQuiz() {
@@ -457,7 +480,7 @@ function loadQuestion() {
       <div class="progress-bar">प्रश्न ${currentIndex + 1} / ${quiz.length}</div>
       <div class="q-title">
         <span>${item.q}</span>
-        <button class="speaker-btn" onclick="speak('${item.q}')">🔊</button>
+        <button class="speaker-btn" onclick="readEntireCard(quiz[currentIndex])">🔊</button>
       </div>
       ${item.img ? `<img src="${item.img}" class="q-img" onerror="this.style.display='none'">` : ''}
     </div>
@@ -468,6 +491,8 @@ function loadQuestion() {
   item.opts.forEach((opt, optIdx) => {
     html += `
       <div class="opt-btn" id="opt-${optIdx}" onclick="handleOptionClick(${opt.correct}, ${optIdx})">
+        <button class="speaker-btn" style="width:34px; height:34px; font-size:14px; margin-bottom:6px;" 
+                onclick="event.stopPropagation(); window.speechSynthesis.cancel(); speakHindi('${opt.text}');">🔊</button>
         ${opt.img ? `<img src="${opt.img}" onerror="this.style.display='none'">` : ''}
         <span>${opt.text}</span>
       </div>`;
@@ -479,11 +504,14 @@ function loadQuestion() {
     </div>`;
   
   container.innerHTML = html;
-  speak(item.q);
+  
+  // Read Question and Options aloud automatically
+  readEntireCard(item);
 }
 
 function handleOptionClick(isCorrect, optIdx) {
-  if (isAnsweringBlocked) return; // Prevent double taps
+  if (isAnsweringBlocked) return;
+  window.speechSynthesis.cancel(); // Stop narrator when child taps
 
   const selectedBtn = document.getElementById(`opt-${optIdx}`);
   const feedbackEl = document.getElementById('feedback-text');
@@ -492,9 +520,8 @@ function handleOptionClick(isCorrect, optIdx) {
     isAnsweringBlocked = true;
     selectedBtn.classList.add('correct-anim');
     feedbackEl.innerHTML = "<span style='color:#2E7D32;'>🎉 शाबाश! बहुत बढ़िया!</span>";
-    speak("शाबाश! बहुत बढ़िया!");
+    speakHindi("शाबाश! बहुत बढ़िया!");
 
-    // Automatically transition to next question after 1.5 seconds
     setTimeout(() => {
       currentIndex++;
       if (currentIndex < quiz.length) {
@@ -507,14 +534,15 @@ function handleOptionClick(isCorrect, optIdx) {
   } else {
     selectedBtn.classList.add('wrong-anim');
     feedbackEl.innerHTML = "<span style='color:#C62828;'>❌ फिर से कोशिश करो</span>";
-    speak("गलत उत्तर, फिर से कोशिश करो");
+    speakHindi("गलत उत्तर, फिर से कोशिश करो");
 
-    // Remove red shake/color after 700ms so toddler can try the other option
     setTimeout(() => {
       selectedBtn.classList.remove('wrong-anim');
     }, 700);
   }
 }
+  
+
 
 function showCelebrationScreen() {
   const container = document.getElementById('quiz-box');
