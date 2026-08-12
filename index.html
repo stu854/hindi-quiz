@@ -76,9 +76,9 @@ function readEntireCard(item) {
 
   speakHindi(item.q, () => {
     if (item.opts && item.opts[0]) {
-      speakHindi("पहला: " + item.opts[0].text, () => {
+      speakHindi("पहला ऑप्शन : " + item.opts[0].text, () => {
         if (item.opts && item.opts[1]) {
-          speakHindi("दूसरा: " + item.opts[1].text);
+          speakHindi("दूसरा ऑप्शन : " + item.opts[1].text);
         }
       });
     }
