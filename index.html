@@ -2,27 +2,37 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Toddler Hindi Quiz</title>
   <style>
-    body { font-family: sans-serif; text-align: center; background: #FFF9E6; margin: 0; padding: 20px; }
-    .card { background: white; border-radius: 20px; padding: 20px; max-width: 500px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .q-img { max-height: 180px; border-radius: 12px; margin: 10px 0; }
-    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-    .opt-btn { background: #E8F5E9; border: 3px solid #81C784; border-radius: 16px; padding: 15px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 140px; font-size: 1.2rem; }
-    .opt-btn img { max-height: 90px; margin-bottom: 8px; }
-    .speaker-btn { background: #FFD54F; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 20px; cursor: pointer; margin-left: 8px; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background: #FFF9E6; margin: 0; padding: 15px; user-select: none; }
+    .card { background: white; border-radius: 24px; padding: 20px; max-width: 520px; margin: auto; box-shadow: 0 6px 20px rgba(0,0,0,0.08); position: relative; min-height: 480px; display: flex; flex-direction: column; justify-content: space-between; }
+    .progress-bar { font-size: 1rem; color: #757575; font-weight: bold; margin-bottom: 8px; }
+    .q-title { font-size: 1.5rem; margin: 10px 0; color: #2C3E50; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .q-img { max-height: 160px; max-width: 90%; border-radius: 16px; margin: 10px auto; object-fit: contain; }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 15px; }
+    .opt-btn { background: #F4FBF7; border: 3px solid #81C784; border-radius: 20px; padding: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 150px; font-size: 1.4rem; font-weight: bold; transition: transform 0.15s, border-color 0.2s, background-color 0.2s; }
+    .opt-btn:active { transform: scale(0.96); }
+    .opt-btn img { max-height: 95px; max-width: 90%; margin-bottom: 8px; object-fit: contain; }
+    .speaker-btn { background: #FFD54F; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 20px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 3px 6px rgba(0,0,0,0.15); }
+    .feedback-banner { min-height: 36px; font-size: 1.3rem; font-weight: bold; margin-top: 12px; }
+    .correct-anim { background: #C8E6C9 !important; border-color: #2E7D32 !important; transform: scale(1.03); }
+    .wrong-anim { background: #FFCDD2 !important; border-color: #C62828 !important; }
   </style>
-
-
 </head>
 <body>
 
 <div class="card" id="quiz-box">
-  <button id="start-btn" onclick="startQuiz()" style="font-size: 1.5rem; padding: 15px 30px; border-radius: 12px; background: #4CAF50; color: white; border: none;">शुरू करें (Start)</button>
+  <div style="margin: auto;">
+    <h1 style="font-size: 2rem; color: #2E7D32;">नमस्ते! 🌟</h1>
+    <p style="font-size: 1.2rem; color: #555;">हिंदी अभ्यास शुरू करें</p>
+    <button onclick="startQuiz()" style="font-size: 1.5rem; padding: 16px 36px; border-radius: 16px; background: #4CAF50; color: white; border: none; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(76,175,80,0.4);">शुरू करें (Start)</button>
+  </div>
 </div>
 
 <script>
+// Paste your full quiz array here
 const quiz = [
   // Page 1 (Q1 to Q3)
   {
@@ -415,48 +425,107 @@ const quiz = [
   }
 ];
 
-let index = 0;
+let currentIndex = 0;
+let isAnsweringBlocked = false;
 
 function speak(text) {
+  if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'hi-IN';
   u.rate = 0.85;
+  
+  const voices = window.speechSynthesis.getVoices();
+  const hindiVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('hi-IN'));
+  if (hindiVoice) u.voice = hindiVoice;
+  
   window.speechSynthesis.speak(u);
 }
 
 function startQuiz() {
+  currentIndex = 0;
   loadQuestion();
 }
 
 function loadQuestion() {
-  const item = quiz[index];
+  isAnsweringBlocked = false;
+  const item = quiz[currentIndex];
   const container = document.getElementById('quiz-box');
   
-  let html = `<h2 style="font-size: 1.6rem;">${item.q} <button class="speaker-btn" onclick="speak('${item.q}')">🔊</button></h2>`;
-  if (item.img) html += `<img src="${item.img}" class="q-img">`;
+  let html = `
+    <div>
+      <div class="progress-bar">प्रश्न ${currentIndex + 1} / ${quiz.length}</div>
+      <div class="q-title">
+        <span>${item.q}</span>
+        <button class="speaker-btn" onclick="speak('${item.q}')">🔊</button>
+      </div>
+      ${item.img ? `<img src="${item.img}" class="q-img" onerror="this.style.display='none'">` : ''}
+    </div>
+    
+    <div>
+      <div class="options-grid">`;
   
-  html += `<div class="options-grid">`;
-  item.opts.forEach((opt) => {
+  item.opts.forEach((opt, optIdx) => {
     html += `
-      <div class="opt-btn" onclick="checkAnswer(${opt.correct})">
-        ${opt.img ? `<img src="${opt.img}">` : ''}
+      <div class="opt-btn" id="opt-${optIdx}" onclick="handleOptionClick(${opt.correct}, ${optIdx})">
+        ${opt.img ? `<img src="${opt.img}" onerror="this.style.display='none'">` : ''}
         <span>${opt.text}</span>
       </div>`;
   });
-  html += `</div>`;
+
+  html += `
+      </div>
+      <div class="feedback-banner" id="feedback-text"></div>
+    </div>`;
   
   container.innerHTML = html;
   speak(item.q);
 }
 
-function checkAnswer(isCorrect) {
+function handleOptionClick(isCorrect, optIdx) {
+  if (isAnsweringBlocked) return; // Prevent double taps
+
+  const selectedBtn = document.getElementById(`opt-${optIdx}`);
+  const feedbackEl = document.getElementById('feedback-text');
+
   if (isCorrect) {
-    speak("बहुत बढ़िया! शाबाश!");
-    alert("🎉 सही उत्तर!");
+    isAnsweringBlocked = true;
+    selectedBtn.classList.add('correct-anim');
+    feedbackEl.innerHTML = "<span style='color:#2E7D32;'>🎉 शाबाश! बहुत बढ़िया!</span>";
+    speak("शाबाश! बहुत बढ़िया!");
+
+    // Automatically transition to next question after 1.5 seconds
+    setTimeout(() => {
+      currentIndex++;
+      if (currentIndex < quiz.length) {
+        loadQuestion();
+      } else {
+        showCelebrationScreen();
+      }
+    }, 1500);
+
   } else {
-    speak("गलत उत्तर, फिर से कोशिश करो!");
+    selectedBtn.classList.add('wrong-anim');
+    feedbackEl.innerHTML = "<span style='color:#C62828;'>❌ फिर से कोशिश करो</span>";
+    speak("गलत उत्तर, फिर से कोशिश करो");
+
+    // Remove red shake/color after 700ms so toddler can try the other option
+    setTimeout(() => {
+      selectedBtn.classList.remove('wrong-anim');
+    }, 700);
   }
+}
+
+function showCelebrationScreen() {
+  const container = document.getElementById('quiz-box');
+  speak("बधाई हो! आपने सभी प्रश्न पूरे कर लिए हैं!");
+  container.innerHTML = `
+    <div style="margin: auto;">
+      <h1 style="font-size: 3rem; margin: 0;">🏆 ⭐ 🎈</h1>
+      <h2 style="color: #2E7D32; font-size: 1.8rem; margin: 15px 0;">शानदार काम!</h2>
+      <p style="font-size: 1.2rem; color: #555;">आपने सभी सवाल हल कर लिए!</p>
+      <button onclick="startQuiz()" style="font-size: 1.3rem; padding: 14px 28px; border-radius: 14px; background: #FF9800; color: white; border: none; font-weight: bold; cursor: pointer;">फिर से खेलें (Play Again)</button>
+    </div>`;
 }
 </script>
 </body>
