@@ -27,7 +27,7 @@
   <div style="margin: auto;">
     <h1 style="font-size: 2rem; color: #2E7D32;">नमस्ते! 🌟</h1>
     <p style="font-size: 1.2rem; color: #555;">हिंदी अभ्यास शुरू करें</p>
-    <button onclick="startQuiz()" style="font-size: 1.5rem; padding: 16px 36px; border-radius: 16px; background: #4CAF50; color: white; border: none; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(76,175,80,0.4);">शुरू करें (Start)</button>
+    <button onclick="showMenu()" style="font-size: 1.5rem; padding: 16px 36px; border-radius: 16px; background: #4CAF50; color: white; border: none; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(76,175,80,0.4);">शुरू करें (Start)</button>
   </div>
 </div>
 
@@ -91,11 +91,6 @@ function selectQuiz(quizKey) {
   currentIndex = 0;
   loadQuestion();
 }
-let currentIndex = 0;
-let isAnsweringBlocked = false;
-
-let currentIndex = 0;
-let isAnsweringBlocked = false;
 
 // Unified Speech Function with Optional 'On Finish' Callback
 function speakHindi(text, onEndCallback = null) {
@@ -125,7 +120,7 @@ function readEntireCard(item) {
   speakHindi(item.q, () => {
     // 2. Speak Option 1
     speakHindi("पहला: " + item.opts[0].text, () => {
-      // 3. Speak Option 2
+      // 3. Speak Option 2      
       speakHindi("दूसरा: " + item.opts[1].text);
     });
   });
@@ -191,7 +186,7 @@ function handleOptionClick(isCorrect, optIdx) {
 
     setTimeout(() => {
       currentIndex++;
-      if (currentIndex < quiz.length) {
+      if (currentIndex < currentQuizData.length) {
         loadQuestion();
       } else {
         showCelebrationScreen();
@@ -224,7 +219,7 @@ function replayQuestion() {
 
 function showCelebrationScreen() {
   const container = document.getElementById('quiz-box');
-  speak("बधाई हो! आपने सभी प्रश्न पूरे कर लिए हैं!");
+  speakHindi("बधाई हो! आपने सभी प्रश्न पूरे कर लिए हैं!");
   container.innerHTML = `
     <div style="margin: auto;">
       <h1 style="font-size: 3rem; margin: 0;">🏆 ⭐ 🎈</h1>
